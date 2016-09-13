@@ -23,6 +23,7 @@ public class HeapSort implements Sort {
         }
     }
 
+    @Override
     public <T> void sort(T[] array, Comparator<T> comparator){
         for (int i = array.length / 2 - 1; i >= 0; i--) {
             heapify(array, i, array.length, comparator);
@@ -35,7 +36,7 @@ public class HeapSort implements Sort {
         }
     }
 
-    public static <T extends Comparable<T>> void sort(T[] array) {
+    public <T extends Comparable<T>> void sort(T[] array) {
         sort(array,
                 (a,b) -> a.compareTo(b));
     }

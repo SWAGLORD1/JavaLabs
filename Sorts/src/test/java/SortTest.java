@@ -7,40 +7,52 @@ import junit.framework.Assert.*;
 
 public class SortTest {
 
-    public void testElements(Sort sort) {
+    private Integer[] generateRandomArray() {
         Random rnd = new Random(System.currentTimeMillis());
         int size = rnd.nextInt(1000);
         Integer[] array = new Integer[size];
-        Integer[] example = new Integer[size];
         for (int i = 0; i < size; i++) {
-            array[i] = rnd.nextInt(1000);
-            example[i] = array[i];
+            array[i] = rnd.nextInt(size/5);
         }
-        sort.sort(array, Integer::compareTo);
+        return array;
+    }
+
+    private boolean isSorted(Integer[] array) {
+        boolean correct = true;
+        for (int i = 0; i < array.length - 1; i++)
+            if (array[i].compareTo(array[i + 1]) > 0)
+                correct = false;
+        return correct;
+    }
+
+    private boolean checkElements(Integer[] array, Integer[] example) {
         boolean correct;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < array.length; i++) {
             correct = false;
-            for (int j = i; j < size; j++)
-                if (example[i] == array[j]) {
+            for (int j = i; j < array.length; j++)
+                if (example[i].equals(array[j])) {
                     correct = true;
                     Integer tmp = array[i];
                     array[i] = array[j];
                     array[j] = tmp;
                 }
-            Assert.assertTrue(correct);
+            if(!correct)
+                return false;
         }
+        return true;
+    }
+
+    public void testElements(Sort sort) {
+        Integer[] array = generateRandomArray();
+        Integer[] example = array.clone();
+        sort.sort(array, Integer::compareTo);
+        Assert.assertTrue(checkElements(array, example));
     }
 
     public void testIsSorted(Sort sort) {
-        Random rnd = new Random(System.currentTimeMillis());
-        int size = rnd.nextInt(1000);
-        Integer[] array = new Integer[size];
-        for (int i = 0; i < size; i++) {
-            array[i] = rnd.nextInt(1000);
-        }
+        Integer[] array = generateRandomArray();
         sort.sort(array, Integer::compareTo);
-        for (int i = 0; i < size - 1; i++)
-            Assert.assertTrue(array[i].compareTo(array[i + 1]) <= 0);
+        Assert.assertTrue(isSorted(array));
     }
 
     public void testEmpty(Sort sort) {
@@ -58,8 +70,7 @@ public class SortTest {
             example[i] = i;
         }
         sort.sort(array, Integer::compareTo);
-        for (int i = 0; i < size - 1; i++)
-            Assert.assertTrue(example[i].compareTo(array[i]) == 0);
+        Assert.assertTrue(isSorted(array));
     }
 
     public void testReverse(Sort sort) {
@@ -70,8 +81,7 @@ public class SortTest {
             array[i] = size - i;
         }
         sort.sort(array, Integer::compareTo);
-        for (int i = 0; i < size - 1; i++)
-            Assert.assertTrue(array[i].compareTo(array[i + 1]) <= 0);
+        Assert.assertTrue(isSorted(array));
     }
 
 }

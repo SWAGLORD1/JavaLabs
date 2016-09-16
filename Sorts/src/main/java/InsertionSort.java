@@ -16,9 +16,4 @@ public class InsertionSort implements Sort {
         }
     }
 
-    public <T extends Comparable<T>> void sort(T[] array) {
-        sort(array,
-                (a,b) -> a.compareTo(b));
-    }
-
 }

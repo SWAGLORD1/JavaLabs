@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class HeapSortTest extends SortTest{
+public class HeapSortTest extends SortTest {
 
     @Test
     public void heapTestElements() {

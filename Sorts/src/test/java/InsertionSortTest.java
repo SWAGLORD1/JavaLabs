@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class InsertionSortTest extends SortTest{
+public class InsertionSortTest extends SortTest {
 
     @Test
     public void insertionTestElements() {
